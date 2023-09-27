@@ -1,28 +1,31 @@
 <template>
   <div>
-    <ul>
+    <TransitionGroup name="list" tag="ul">
       <li v-for="(todo, idx) in todoData" :key="idx" class="shadow">
-        <i class="fas fa-check checkBtn" :class="{checkBtnCompleted: todo.completed}" 
-                        @click="toggleComplete(todo, idx)"></i>
-        <span :class="{ textCompleted: todo.completed }">{{todo.item}}</span>
+        <i
+          class="fas fa-check checkBtn"
+          :class="{ checkBtnCompleted: todo.completed }"
+          @click="toggleComplete(todo, idx)"
+        ></i>
+        <span :class="{ textCompleted: todo.completed }">{{ todo.item }}</span>
         <span class="removeBtn" @click="removeTodo(todo, idx)">
-            <i class="fas fa-trash-alt"></i>
+          <i class="fas fa-trash-alt"></i>
         </span>
       </li>
-    </ul>
+    </TransitionGroup>
   </div>
 </template>
 <script>
 export default {
-  props: ['todoData'],
-  
+  props: ["todoData"],
+
   methods: {
     removeTodo(todoItem, index) {
       this.$emit("removeTodoEvent", todoItem, index);
     },
-    toggleComplete(todoItem, index){
+    toggleComplete(todoItem, index) {
       this.$emit("togleTodoEvent", todoItem, index);
-    }
+    },
   },
 };
 </script>
@@ -62,5 +65,14 @@ li {
 .textCompleted {
   text-decoration: line-through;
   color: #b3adad;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>
